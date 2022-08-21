@@ -1,0 +1,63 @@
+@import "./main.scss";
+
+.Table {
+	display: flex;
+	justify-content: center;
+	width: 100vw;
+	.table {
+		position: relative;
+		width: 90vw;
+		margin-top: 3vh;
+		border-collapse: collapse;
+
+		tr:hover td {
+			background: #1c89c9b4;
+			cursor: pointer;
+		}
+
+		tr.dltMode:hover td {
+			background: rgba(148, 11, 39, 0.6);
+			cursor: pointer;
+		}
+
+		td {
+			border-top: 7px $lightDesert solid;
+			background: $lightBlue;
+			padding-top: 1vh;
+			padding-bottom: 2vh;
+			font-size: 1.1vw;
+			padding-left: 0.5vw;
+			transition: 0.2s;
+		}
+		th {
+			background: $blue;
+			padding-top: 1vh;
+			padding-bottom: 2vh;
+			text-align: start;
+			font-size: 1.2vw;
+			&:first-child {
+				border-radius: 3px 0;
+			}
+			&:last-child {
+				border-radius: 0 3px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.Table {
+		.table {
+			.date,
+			.dateH {
+				display: none;
+			}
+			td {
+				font-size: 1.5vw;
+			}
+			th {
+				font-size: 2vw;
+			}
+		}
+	}
+}

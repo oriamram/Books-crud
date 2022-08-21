@@ -1,0 +1,54 @@
+@import "./main.scss";
+
+.nav {
+	@include size(100vw, 5vh);
+	margin: 0;
+	background: $desert;
+	min-height: 50px;
+
+	ul {
+		@include size(100%, 100%);
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		margin: 0;
+		font-size: 1.6rem;
+		font-weight: 600;
+		li {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			transition: 0.3s;
+
+			span {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 1;
+			}
+			div {
+				@include size(0, 120%);
+				position: absolute;
+				top: -10%;
+				background: #ffe3b39a;
+				border-radius: 2px;
+				transition: 0.3s ease-in-out;
+			}
+			&:hover {
+				div {
+					width: 120%;
+				}
+				cursor: pointer;
+			}
+		}
+		.dlt {
+			.active {
+				color: rgb(190, 16, 51);
+			}
+		}
+		a {
+			text-decoration: none;
+			color: black;
+		}
+	}
+}
