@@ -1,8 +1,14 @@
-import dotenv from "dotenv";
-import { uniqueNamesGenerator, names } from "unique-names-generator";
-import createMobilePhoneNumber from "random-mobile-numbers";
-import axios from "axios";
-import { Database } from "./Database.js";
+// import dotenv from "dotenv";
+// import { uniqueNamesGenerator, names } from "unique-names-generator";
+// import createMobilePhoneNumber from "random-mobile-numbers";
+// import axios from "axios";
+// import { Database } from "./Database.js";
+const dotenv = require("dotenv");
+const { uniqueNamesGenerator, names } = require("unique-names-generator");
+const createMobilePhoneNumber = require("random-mobile-numbers");
+const axios = require("axios");
+const Database = require("./Database.js");
+
 dotenv.config({ path: "../.env" });
 const db = new Database();
 onStart();
@@ -15,10 +21,16 @@ async function onStart() {
 	// for (let i = 0; i < 10; i++) {
 	// 	await db.insertUser(UserGenerator());
 	// }
-	const books = await booksGenerator();
-	for (let book of books) {
-		await db.insertBook(book);
-	}
+	// const books = await booksGenerator();
+	// for (let book of await booksGenerator()) {
+	// 	await db.insertBook(book);
+	// }
+	// for (let book of books) {
+	// 	await db.insertBook(book);
+	// }
+	// await db.updateBookBorrowHistory(123, 44);
+	// await db.updateUserCurrentBook(44, "If It Bleeds");
+	// console.log(await db.checkForValidInsert({ borrow_history: [32] }));
 	// await db.insertBook({ id: "11121", title: "4bbb", subtitle: "afcegrws", pages: 412, publish: "1010-10-27", ratings: { avg: 5, count: 124 }, borrow_history: [2, 6, 1], author: 2 });
 	// await db.updateUserCurrentBook(5, null);
 	// await db.insertAuthor({ name: "oria", number_of_books: 123 });
@@ -32,7 +44,7 @@ async function onStart() {
 async function createTableBooks() {
 	const sql = `CREATE TABLE IF NOT EXISTS books(
 		id TEXT PRIMARY KEY,
-		title VARCHAR(50) NOT NULL,
+		title VARCHAR(50) NOT NULL UNIQUE,
 		subtitle VARCHAR(50) NOT NULL,
 		pages INT NOT NULL,
 		publish DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -114,9 +126,9 @@ async function booksGenerator() {
 				book.volumeInfo.subtitle,
 				book.volumeInfo.pageCount,
 				book.volumeInfo.publishedDate,
-				{ avg: book.volumeInfo.averageRating || null, count: book.volumeInfo.ratingsCount || null },
+				{ avg: book.volumeInfo.averageRating || "", count: book.volumeInfo.ratingsCount || "" },
 			];
-			booksList.push({ id, title, subtitle: subtitle || null, pages, publish: publish || null, ratings, borrow_history, author: author.id });
+			booksList.push({ id, title, subtitle: subtitle || "", pages, publish: publish || null, ratings, borrow_history, author: author.id });
 		}
 	}
 	return booksList;

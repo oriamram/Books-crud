@@ -1,10 +1,3 @@
-// import express from "express";
-// import dotenv from "dotenv";
-// import cors from "cors";
-// import path from "path";
-// import bp from "body-parser";
-// import { Database } from "./Database.js";
-
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -18,7 +11,6 @@ const app = express();
 const db = new Database();
 app.use(cors());
 app.use(bp.json());
-
 db.connect().then(() => {
 	app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 });
@@ -35,9 +27,21 @@ app.get("/get_book", async (req, res) => {
 app.post("/delete_book", async (req, res) => {
 	res.send(await db.deleteBookById(req.query.id));
 });
-//insert book after check of valid input
-app.get("/insert_book", async (req, res) => {
-	res.send(await db.insertBook(JSON.parse(req.query.book_values)));
+//insert book
+app.post("/insert_book", async (req, res) => {
+	const response = await db.insertBook(req.body);
+	res.sendStatus(response);
+});
+
+//change all values
+app.put("/update_book", async (req, res) => {
+	const response = await db.updateBookById(req.body);
+	res.sendStatus(response);
+});
+
+//return all the books according to the query
+app.get("/search_books", async (req, res) => {
+	res.send(await db.searchBooks(req.query.searchTerm));
 });
 ////////////////////////////////////////////////////////////////////books ^^^
 
@@ -53,6 +57,22 @@ app.get("/get_author", async (req, res) => {
 app.post("/delete_author", async (req, res) => {
 	res.send(await db.deleteAuthorById(req.query.id));
 });
+//insert author
+app.post("/insert_author", async (req, res) => {
+	const response = await db.insertAuthor(req.body);
+	res.sendStatus(response);
+});
+
+//change all values
+app.put("/update_author", async (req, res) => {
+	const response = await db.updateAuthorById(req.body);
+	res.sendStatus(response);
+});
+
+//return all the authors according to the query
+app.get("/search_authors", async (req, res) => {
+	res.send(await db.searchAuthors(req.query.searchTerm));
+});
 ///////////////////////////////////////////////////////////////////////authors ^^^
 
 //get all users
@@ -67,7 +87,22 @@ app.get("/get_user", async (req, res) => {
 app.post("/delete_user", async (req, res) => {
 	res.send(await db.deleteUserById(req.query.id));
 });
+//insert user
+app.post("/insert_user", async (req, res) => {
+	const response = await db.insertUser(req.body);
+	res.sendStatus(response);
+});
 
+//change all values
+app.put("/update_user", async (req, res) => {
+	const response = await db.updateUserById(req.body);
+	res.sendStatus(response);
+});
+
+//return all the users according to the query
+app.get("/search_users", async (req, res) => {
+	res.send(await db.searchUsers(req.query.searchTerm));
+});
 ////////////////////////////////////////////////////////////////////users ^^^
 
 if (process.env.NODE_ENV === "production") {

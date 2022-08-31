@@ -1,55 +1,67 @@
-import React from "react";
-import Nav from "./Nav";
-import Table from "./Table";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import Nav from "./Nav";
+import Table from "./tablePage/Table";
+import Create from "./createPage/Create";
+import Info from "./Info";
 import "../styles/main.scss";
 
-class App extends React.Component {
-	state = { dltMode: false, books: [], authors: [], users: [] };
+export const dltContext = React.createContext();
+export const searchContext = React.createContext();
 
-	onDltClick = (e) => {
-		if (!this.state.dltMode) {
-			this.setState({ dltMode: true });
-		} else {
-			this.setState({ dltMode: false });
-		}
+const App = () => {
+	const [dltMode, setDltMode] = useState(false);
+	const [books, setBooks] = useState([]);
+	const [authors, setAuthors] = useState([]);
+	const [users, setUsers] = useState([]);
+	const [search, setSearch] = useState("");
+
+	//run when delete btn is clicked
+	const onDltClick = (e) => {
+		setDltMode(!dltMode);
 		e.target.classList.toggle("active");
 	};
 
 	//sets the state of name with obj (should be used from Table)
-	setStateOfApp = async (name, obj) => {
-		if (this.state[name].length === 0 || obj[name].length !== this.state[name].length) {
-			this.setState(await obj);
+	const setStateOfApp = async (type, obj) => {
+		switch (type) {
+			case "books":
+				if (obj.books.length !== books.length) {
+					setBooks(obj.books);
+					setAuthors(obj.authors);
+				}
+				break;
+			case "authors":
+				if (obj.authors.length !== authors.length) {
+					setAuthors(obj.authors);
+				}
+				break;
+			case "users":
+				if (obj.users.length !== users.length) {
+					setUsers(obj.users);
+				}
+				break;
 		}
 	};
-
-	//////not in use yet
-	loader() {
-		return (
-			<div className="lds-ring">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
-		);
-	}
-
-	render() {
-		return (
-			<div className="App">
-				<Routes>
-					<Route path="/" element={<Nav onDltClick={this.onDltClick} />}>
-						<Route index element={<Table dltMode={this.state.dltMode} setStateOfApp={this.setStateOfApp} setLoaderFalse={this.setLoaderFalse} values={this.state.books} type="books" />} />
-						<Route path="create" />
-						<Route path="authors" element={<Table dltMode={this.state.dltMode} setStateOfApp={this.setStateOfApp} values={this.state.authors} type="authors" />} />
-						<Route path="users" element={<Table dltMode={this.state.dltMode} setStateOfApp={this.setStateOfApp} values={this.state.users} type="users" />} />
-					</Route>
-					<Route path="*" element={<h1>Error 404: No Such Page</h1>} />
-				</Routes>
-			</div>
-		);
-	}
-}
+	return (
+		<div className="App">
+			<searchContext.Provider value={search}>
+				<dltContext.Provider value={{ dltMode, setStateOfApp }}>
+					<Routes>
+						<Route path="/" element={<Nav onDltClick={onDltClick} setSearch={setSearch} search={search} />}>
+							<Route index element={<Table values={books} type="books" />} />
+							<Route path="create" element={<Create />} />
+							<Route path="authors" element={<Table values={authors} type="authors" />} />
+							<Route path="users" element={<Table values={users} type="users" />} />
+							<Route path="info/:type/:id" element={<Info values={{ books, authors, users }} />}></Route>
+							<Route path="edit/:type/:id" element={<Info values={{ books, authors, users }} />}></Route>
+						</Route>
+						<Route path="*" element={<h1>Error 404: No Such Page</h1>} />
+					</Routes>
+				</dltContext.Provider>
+			</searchContext.Provider>
+		</div>
+	);
+};
 
 export default App;

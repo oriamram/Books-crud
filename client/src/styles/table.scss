@@ -9,6 +9,7 @@
 		width: 90vw;
 		margin-top: 3vh;
 		border-collapse: collapse;
+		background: linear-gradient(0, $lightBlue 5%, #4589b1bb 40%, $lightBlue 80%);
 
 		tr:hover td {
 			background: #1c89c9b4;
@@ -22,7 +23,6 @@
 
 		td {
 			border-top: 7px $lightDesert solid;
-			background: $lightBlue;
 			padding-top: 1vh;
 			padding-bottom: 2vh;
 			font-size: 1.1vw;
