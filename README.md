@@ -1,4 +1,9 @@
 # books-crud-W.I.P
-to run this localy you should ask for the DATABASE_URL and put it in the .env file
+To run this localy:
 
-link to heroku: https://ori-books-crud.herokuapp.com/
+```npm i``` inside the server and the client folders
+
+
+After that you should ask for the DATABASE_URL and put it in the .env file
+
+Link to heroku: https://ori-books-crud.herokuapp.com/
