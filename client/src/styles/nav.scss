@@ -2,9 +2,13 @@
 
 .nav {
 	@include size(100vw, 5vh);
+	position: sticky;
+	top: 0;
 	margin: 0;
 	background: $desert;
 	min-height: 50px;
+	z-index: 3;
+	box-shadow: 1px 1px 16px rgba(90, 90, 90, 0.582);
 
 	ul {
 		@include size(100%, 100%);

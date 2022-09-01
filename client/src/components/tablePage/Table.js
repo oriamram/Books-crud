@@ -6,24 +6,15 @@ import { dltContext, searchContext } from "../App";
 import "../../styles/table.scss";
 
 const Table = (props) => {
-	const { dltMode, setStateOfApp } = useContext(dltContext);
+	const { setStateOfApp } = useContext(dltContext);
 	const searchTerm = useContext(searchContext);
 	const [rst, setRst] = useState({});
 	const path = useLocation().pathname.slice(1, -1);
 
-	//get users from server
-	// const getAllUsers = async () => {
-	// 	return (await axios.get("/all_users")).data;
-	// };
 	//get authors from server
 	const getAllAuthors = async () => {
 		return (await axios.get("/all_authors")).data;
 	};
-
-	//get books from server
-	// const getAllBooks = async () => {
-	// 	return (await axios.get(`/all_books`)).data;
-	// };
 
 	//handle the search bar searching
 	const searchItemByTerm = async () => {
@@ -127,21 +118,15 @@ const Table = (props) => {
 
 	//on dlt click
 	const dltClick = async (id) => {
-		if (dltMode) {
-			let urlName = path === "" ? "book" : path;
-			await axios.post(`/delete_${urlName}`, null, {
-				params: {
-					id: id,
-				},
-			});
-			setRst({});
-			return true;
-		} else {
-			return false;
-		}
+		let urlName = path === "" ? "book" : path;
+		await axios.post(`/delete_${urlName}`, null, {
+			params: {
+				id: id,
+			},
+		});
+		setRst({});
 	};
 
-	//return
 	return <div className="Table">{typeRender()}</div>;
 };
 

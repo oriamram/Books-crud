@@ -10,17 +10,10 @@ export const dltContext = React.createContext();
 export const searchContext = React.createContext();
 
 const App = () => {
-	const [dltMode, setDltMode] = useState(false);
 	const [books, setBooks] = useState([]);
 	const [authors, setAuthors] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState("");
-
-	//run when delete btn is clicked
-	const onDltClick = (e) => {
-		setDltMode(!dltMode);
-		e.target.classList.toggle("active");
-	};
 
 	//sets the state of name with obj (should be used from Table)
 	const setStateOfApp = async (type, obj) => {
@@ -46,9 +39,9 @@ const App = () => {
 	return (
 		<div className="App">
 			<searchContext.Provider value={search}>
-				<dltContext.Provider value={{ dltMode, setStateOfApp }}>
+				<dltContext.Provider value={{ setStateOfApp }}>
 					<Routes>
-						<Route path="/" element={<Nav onDltClick={onDltClick} setSearch={setSearch} search={search} />}>
+						<Route path="/" element={<Nav setSearch={setSearch} search={search} />}>
 							<Route index element={<Table values={books} type="books" />} />
 							<Route path="create" element={<Create />} />
 							<Route path="authors" element={<Table values={authors} type="authors" />} />

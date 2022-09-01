@@ -185,7 +185,7 @@ module.exports = class Database {
 	async checkForValidUser(username, current_book) {
 		const users = await (await this.getAllUsers()).map((user) => user.username);
 		const books = await (await this.getAllBooks()).map((book) => book.title);
-		if (books.includes(current_book) && !users.includes(username)) {
+		if ((books.includes(current_book) && !users.includes(username)) || (!current_book && !users.includes(username))) {
 			return true;
 		} else return false;
 	}

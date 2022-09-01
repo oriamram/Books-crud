@@ -7,11 +7,6 @@ const Nav = (props) => {
 		<>
 			<nav className="nav">
 				<ul>
-					<li className="dlt" onClick={(e) => props.onDltClick(e)}>
-						<span>Delete</span>
-						<div></div>
-					</li>
-
 					{/* //////////////////////////////////////// */}
 
 					<NavLink
@@ -26,15 +21,7 @@ const Nav = (props) => {
 						</li>
 					</NavLink>
 					{/* //////////////////////////////////////////// */}
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							console.log("submited");
-						}}
-					>
-						<input type="text" value={props.search} onChange={(e) => props.setSearch(e.target.value)} />
-					</form>
-					{/* ///////////////////////////////////////// */}
+
 					<NavLink
 						style={({ isActive }) => {
 							return isActive ? { color: "white" } : {};
@@ -46,6 +33,15 @@ const Nav = (props) => {
 							<div></div>
 						</li>
 					</NavLink>
+					{/* ///////////////////////////////////////// */}
+					<form
+						onSubmit={(e) => {
+							e.preventDefault();
+							console.log("submited");
+						}}
+					>
+						<input type="text" value={props.search} onChange={(e) => props.setSearch(e.target.value)} />
+					</form>
 					{/* /////////////////////////////////// */}
 					<NavLink
 						style={({ isActive }) => {

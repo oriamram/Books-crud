@@ -1,9 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-
-import { dltContext } from "../App";
 const Row = (props) => {
-	const { dltMode } = useContext(dltContext);
 	const navigator = useNavigate();
 
 	//create all the "th"s
@@ -28,7 +25,19 @@ const Row = (props) => {
 
 	//check for header and return accordingly
 	const rowByType = () => {
-		return props.isHeader ? <tr>{createHeader()}</tr> : <>{createRow()}</>;
+		return props.isHeader ? (
+			<tr>
+				{createHeader()}
+				<th></th>
+			</tr>
+		) : (
+			<>
+				{createRow()}
+				<td className="dltBtn" onClick={async () => await props.onDlt(props.values[0])}>
+					<span className="material-symbols-outlined dltBtn">delete</span>
+				</td>
+			</>
+		);
 	};
 
 	//navigate to the info page
@@ -41,9 +50,9 @@ const Row = (props) => {
 		<thead className="tableHead">{rowByType()}</thead>
 	) : (
 		<tr
-			className={"tableRow " + (dltMode ? "dltMode" : "")}
-			onClick={async (e) => {
-				(await props.onDlt(props.values[0])) || handleRowClick();
+			className="tableRow"
+			onClick={(e) => {
+				!e.target.classList.contains("dltBtn") && handleRowClick();
 			}}
 		>
 			{rowByType()}

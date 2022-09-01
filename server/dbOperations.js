@@ -18,9 +18,9 @@ async function onStart() {
 	console.time();
 	console.log("connected");
 	////////////////////////////
-	// for (let i = 0; i < 10; i++) {
-	// 	await db.insertUser(UserGenerator());
-	// }
+	for (let i = 0; i < 10; i++) {
+		await db.insertUser(UserGenerator());
+	}
 	// const books = await booksGenerator();
 	// for (let book of await booksGenerator()) {
 	// 	await db.insertBook(book);

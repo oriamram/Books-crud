@@ -30,6 +30,8 @@
 		min-width: 500px;
 		min-height: 600px;
 		background: linear-gradient(0, $lightBlue 5%, #4589b1bb 40%, $lightBlue 80%);
+		box-shadow: 1px 1px 10px rgb(161, 161, 161);
+		border-radius: 3px;
 		left: 35%;
 		right: 35%;
 		top: 130%;
@@ -42,12 +44,15 @@
 			text-decoration: underline;
 		}
 		.inputs {
+			@include size(70%, unset);
 			position: relative;
 			margin-top: 3vh;
 			margin-left: 3vw;
 			font-size: 3vh;
+
 			input {
-				@include size(unset, 3vh);
+				@include size(50%, 3vh);
+
 				position: absolute;
 				margin: 0;
 				border: none;
