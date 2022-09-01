@@ -191,10 +191,15 @@ module.exports = class Database {
 	}
 	//update users current book
 	async updateUserCurrentBook(userId, book_name) {
-		const sql = `UPDATE users SET current_book=$1 where id = $2`;
-		await this.client.query(sql, [book_name, userId]);
-		await this.updateUserBorrowHistory(userId, book_name);
-		await this.updateBookBorrowHistory((await this.getBookByTitle(book_name)).id, userId);
+		if (book_name === "none") {
+			const sql = `UPDATE users SET current_book=$1 where id = $2`;
+			await this.client.query(sql, [null, userId]);
+		} else {
+			const sql = `UPDATE users SET current_book=$1 where id = $2`;
+			await this.client.query(sql, [book_name, userId]);
+			await this.updateUserBorrowHistory(userId, book_name);
+			await this.updateBookBorrowHistory((await this.getBookByTitle(book_name)).id, userId);
+		}
 	}
 	//update users borrow history
 	async updateUserBorrowHistory(userId, book_name) {

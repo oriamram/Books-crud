@@ -18,13 +18,13 @@ async function onStart() {
 	console.time();
 	console.log("connected");
 	////////////////////////////
-	for (let i = 0; i < 10; i++) {
-		await db.insertUser(UserGenerator());
-	}
-	// const books = await booksGenerator();
-	// for (let book of await booksGenerator()) {
-	// 	await db.insertBook(book);
+	// for (let i = 0; i < 10; i++) {
+	// 	await db.insertUser(UserGenerator());
 	// }
+	// const books = await booksGenerator();
+	for (let book of await booksGenerator()) {
+		await db.insertBook(book);
+	}
 	// for (let book of books) {
 	// 	await db.insertBook(book);
 	// }
@@ -108,7 +108,7 @@ async function booksGenerator() {
 				params: {
 					q: "inauthor:" + author.name,
 					key: process.env.API_KEY,
-					maxResults: Math.floor(Math.random() * 5 + 1),
+					maxResults: Math.floor(Math.random() * 10 + 1),
 				},
 			})
 		).data.items;
