@@ -1,4 +1,4 @@
-# books-crud-W.I.P
+# Books-crud
 To run this localy:
 
 ```npm i``` inside the server and the client folders
