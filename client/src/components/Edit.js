@@ -2,13 +2,39 @@ import React from "react";
 import axios from "axios";
 
 class Edit extends React.Component {
-	state = { values: {} };
+	state = { values: {}, booksNames: {} };
 	path = window.location.pathname.split("/");
 	type = this.path[2].slice(0, -1);
 
+	getAllAvailableBooks = async () => {
+		const books = (await axios.get("/all_books")).data;
+		const users = await this.getAllUsers();
+		let availableBooks = [];
+		for (let book of books) {
+			if (!users.map((user) => user.current_book).includes(book.title)) {
+				availableBooks.push({ title: book.title });
+			}
+		}
+		return availableBooks;
+	};
+
+	getAllUsers = async () => {
+		return (await axios.get("/all_users")).data;
+	};
+
 	//set the initial state od values
 	componentDidMount() {
-		this.setState({ values: this.props.valuesFromInfo });
+		const getAllBooks = async () => {
+			let booksNames = [];
+			if (this.path[2] === "users") {
+				booksNames = await this.getAllAvailableBooks();
+				booksNames = booksNames.map((book) => {
+					return { title: book.title };
+				});
+			}
+			this.setState({ values: this.props.valuesFromInfo, booksNames });
+		};
+		getAllBooks();
 	}
 	//change the state of values from the user input
 	handleInputChange = (key, value) => {
@@ -86,6 +112,26 @@ class Edit extends React.Component {
 						/>
 					</>
 				);
+			case "current_book":
+				return (
+					<select
+						id={"booksSelection"}
+						onChange={(e) => {
+							this.setState((state) => {
+								let newValues = { ...state.values };
+								newValues["current_book"] = e.target.value;
+								return { values: newValues };
+							});
+						}}
+					>
+						<option value="none">none</option>
+						{this.state.booksNames.map((book) => (
+							<option key={book.title} value={book.title}>
+								{book.title}
+							</option>
+						))}
+					</select>
+				);
 		}
 	};
 	//decides how items should be shown to the user
@@ -99,10 +145,11 @@ class Edit extends React.Component {
 	};
 	//when save is clicked
 	sendUpdatesToServer = async () => {
-		axios
+		await axios
 			.put(`/update_${this.type}`, this.state.values)
 			.then((res) => alert("EDIT SUCCEEDED!"))
 			.catch((err) => alert("EDIT FAILED"));
+		this.props.setUsers(await this.getAllUsers());
 	};
 
 	render() {

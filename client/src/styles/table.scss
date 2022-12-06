@@ -20,11 +20,11 @@
 		.tableRow {
 			.dltBtn {
 				background: rgba(148, 11, 39, 0.6);
-				width: 3vw;
+				width: 2.5vw;
 				min-width: 30px;
 				span {
 					padding: 0;
-					margin-left: 0.6vw;
+					margin-left: 0.7vw;
 					margin-top: 1.5vh;
 					&.dltBtn {
 						background: rgba(0, 0, 0, 0);
@@ -44,6 +44,7 @@
 			font-size: 1.1vw;
 			padding-left: 0.5vw;
 			transition: 0.2s;
+			max-width: 25vw;
 		}
 		th {
 			background: $blue;

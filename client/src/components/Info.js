@@ -26,12 +26,15 @@ export const Info = (props) => {
 	const renderValues = () => {
 		return (
 			<>
-				{Object.keys(values).map((key) => (
-					<div key={key} className="value">
-						<h2>{key}: </h2>
-						{valueHandler(values[key])}
-					</div>
-				))}
+				{Object.keys(values).map((key) => {
+					// console.log(key);
+					return (
+						<div key={key} className="value">
+							<h2>{key}: </h2>
+							{valueHandler(values[key])}
+						</div>
+					);
+				})}
 			</>
 		);
 	};
@@ -39,6 +42,7 @@ export const Info = (props) => {
 	//decides what to show to the user
 	const valueHandler = (value) => {
 		if (typeof value === "object") {
+			// console.log(value);
 			if (!value) {
 				return null;
 			} else if (value.avg) {
@@ -85,14 +89,13 @@ export const Info = (props) => {
 		) : (
 			<>
 				<h1>{type.slice(0, -1) + "'s Editor:"}</h1>
-				<Edit valuesFromInfo={values} />
+				<Edit valuesFromInfo={values} setUsers={props.setUsers} />
 				<button className="editBtn" onClick={() => handleBackClick()}>
 					back
 				</button>
 			</>
 		);
 	};
-
 	return (
 		<div className="Info">
 			<div className="info">{infoOrEdit()}</div>

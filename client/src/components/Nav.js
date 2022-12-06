@@ -40,7 +40,7 @@ const Nav = (props) => {
 							console.log("submited");
 						}}
 					>
-						<input type="text" value={props.search} onChange={(e) => props.setSearch(e.target.value)} />
+						<input type="text" placeholder="Search" value={props.search} onChange={(e) => props.setSearch(e.target.value)} />
 					</form>
 					{/* /////////////////////////////////// */}
 					<NavLink

@@ -43,6 +43,7 @@ class CreateSection extends React.Component {
 				if (key !== "ratings" && key !== "author" && key !== "borrow_history") {
 					return (
 						<div key={key} className="inputs">
+							{/* <> */}
 							<label htmlFor={key}>{key}: </label>
 							<input
 								required
@@ -51,6 +52,7 @@ class CreateSection extends React.Component {
 								value={this.state[this.props.option][key] || ""}
 								onChange={(e) => this.UpdateStateByType(this.props.option, key, e.target.value)}
 							/>
+							{/* </> */}
 						</div>
 					);
 				} else if (key === "author") {
@@ -77,7 +79,7 @@ class CreateSection extends React.Component {
 				} else if (key !== "borrow_history") {
 					return (
 						// ratings rates field
-						<div key={key}>
+						<React.Fragment key={key}>
 							<div className="inputs">
 								<label htmlFor="rating">Rating: </label>
 								<input
@@ -102,7 +104,7 @@ class CreateSection extends React.Component {
 									onChange={(e) => this.UpdateStateByType(this.props.option, "count", e.currentTarget.value)}
 								/>
 							</div>
-						</div>
+						</React.Fragment>
 					);
 				}
 			});

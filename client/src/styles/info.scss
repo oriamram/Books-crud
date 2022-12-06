@@ -52,4 +52,10 @@
 			}
 		}
 	}
+	select {
+		@include size(unset, 2.1vh);
+		border: none;
+		border-radius: 3px;
+		outline: none;
+	}
 }

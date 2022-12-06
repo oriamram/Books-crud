@@ -52,7 +52,6 @@
 
 			input {
 				@include size(50%, 3vh);
-
 				position: absolute;
 				margin: 0;
 				border: none;
@@ -61,6 +60,12 @@
 				margin-left: 1vw;
 				outline: none;
 			}
+		}
+		select {
+			@include size(50%, 3vh);
+			border: none;
+			outline: none;
+			border-radius: 3px;
 		}
 	}
 	.defaultCreate {

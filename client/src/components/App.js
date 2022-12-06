@@ -14,7 +14,6 @@ const App = () => {
 	const [authors, setAuthors] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState("");
-
 	//sets the state of name with obj (should be used from Table)
 	const setStateOfApp = async (type, obj) => {
 		switch (type) {
@@ -47,7 +46,7 @@ const App = () => {
 							<Route path="authors" element={<Table values={authors} type="authors" />} />
 							<Route path="users" element={<Table values={users} type="users" />} />
 							<Route path="info/:type/:id" element={<Info values={{ books, authors, users }} />}></Route>
-							<Route path="edit/:type/:id" element={<Info values={{ books, authors, users }} />}></Route>
+							<Route path="edit/:type/:id" element={<Info values={{ books, authors, users }} setUsers={setUsers} />}></Route>
 						</Route>
 						<Route path="*" element={<h1>Error 404: No Such Page</h1>} />
 					</Routes>
